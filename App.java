@@ -2,7 +2,9 @@ package sg.edu.nus.iss;
 
 import java.io.Console;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -62,29 +64,8 @@ public final class App {
             }
 
             if (input.startsWith("login")) {
-                input = input.replace(',', ' ');
-
-                Scanner scanner = new Scanner((input.substring(6)));
-
-                while (scanner.hasNext()) {
-                    fileName = scanner.next();
-                }
-
-                //define the filepath + filename
-                File loginFile = new File(dirPath + File.separator +fileName);
-
-                // try to create a file
-                // isCreated set to true if its a new file to create
-                // isCreated is set to false if named file already exists
-                boolean isCreated = loginFile.createNewFile();
-
-                if (isCreated) {
-                    System.out.println("New file created successfully" + loginFile.getCanonicalFile());
-                } else {
-                    System.out.println("File already created");
-                }
+                fileName = createLoginFile(input, dirPath, fileName);
             } 
-
 
             if (input.startsWith("add")) {
 
@@ -93,11 +74,21 @@ public final class App {
                 input = input.replace(',', ' ');
                 
                 Scanner scanner = new Scanner(input.substring(4));
+
+                FileWriter fw = new FileWriter(dirPath + File.separator + fileName);
+                PrintWriter pw = new PrintWriter(fw);
                 
                 while (scanner.hasNext()) {
                     strValue = scanner.next();
                     cartItems.add(strValue);
+
+                    pw.printf("%s\n", strValue);
                 }
+
+                pw.flush();
+                fw.flush();
+                pw.close();
+                fw.close();
             }
 
             if (input.startsWith("delete")) {
@@ -150,6 +141,32 @@ public final class App {
         for (String file : contents) {
             System.out.println(file);
         }
+    }
+
+    public static String createLoginFile(String input, String dirPath, String fileName) throws IOException {
+        input = input.replace(',', ' ');
+
+        Scanner scanner = new Scanner((input.substring(6)));
+
+        while (scanner.hasNext()) {
+            fileName = scanner.next();
+        }
+
+        //define the filepath + filename
+        File loginFile = new File(dirPath + File.separator +fileName);
+
+        // try to create a file
+        // isCreated set to true if its a new file to create
+        // isCreated is set to false if named file already exists
+        boolean isCreated = loginFile.createNewFile();
+
+        if (isCreated) {
+            System.out.println("New file created successfully" + loginFile.getCanonicalFile());
+        } else {
+            System.out.println("File already created");
+        }
+
+        return fileName;
     }
 
 }
