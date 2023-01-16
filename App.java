@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,10 +15,10 @@ import java.util.Scanner;
 /**
  * Hello world!
  */
-public final class App {
+public class App {
 
-    private App() {
-    }
+    // private App() {
+    // }
 
     /**
      * Says hello to the world.
@@ -44,6 +43,7 @@ public final class App {
         
         Console cons = System.console();
 
+        //initialize input to empty string first, to kickstart the first while loop below
         String input = "";
 
         while (!input.equals("quit")) {
@@ -79,20 +79,20 @@ public final class App {
                 
                 Scanner scanner = new Scanner(input.substring(4));
 
-                FileWriter fw = new FileWriter(dirPath + File.separator + fileName);
-                PrintWriter pw = new PrintWriter(fw);
+                // FileWriter fw = new FileWriter(dirPath + File.separator + fileName);
+                // PrintWriter pw = new PrintWriter(fw);
                 
                 while (scanner.hasNext()) {
                     strValue = scanner.next();
                     cartItems.add(strValue);
 
-                    pw.printf("%s\n", strValue);
+                    // pw.printf("%s\n", strValue);
                 }
 
-                pw.flush();
-                fw.flush();
-                pw.close();
-                fw.close();
+                // pw.flush();
+                // fw.flush();
+                // pw.close();
+                // fw.close();
             }
 
             if (input.startsWith("delete")) {
